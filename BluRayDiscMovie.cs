@@ -19,7 +19,8 @@ namespace moe.yo3explorer.sharpBluRay
                     continue;
                 if (driveInfo.DriveType != DriveType.CDRom)
                     continue;
-                DirectoryInfo certificate = new DirectoryInfo(Path.Combine(driveInfo.RootDirectory.FullName, "CERTIFICATE"));
+                DirectoryInfo certificate =
+                    new DirectoryInfo(Path.Combine(driveInfo.RootDirectory.FullName, "CERTIFICATE"));
                 if (!certificate.Exists)
                     continue;
                 DirectoryInfo bdmv = new DirectoryInfo(Path.Combine(driveInfo.RootDirectory.FullName, "BDMV"));
@@ -28,7 +29,7 @@ namespace moe.yo3explorer.sharpBluRay
                 FileInfo indexBdmv = new FileInfo(Path.Combine(bdmv.FullName, "index.bdmv"));
                 if (!indexBdmv.Exists)
                     continue;
-                yield return new DirectoryInfoWrapper(driveInfo.RootDirectory);
+                yield return new DirectoryInfoWrapper(driveInfo.RootDirectory, driveInfo.VolumeLabel);
             }
         }
 
@@ -87,7 +88,7 @@ namespace moe.yo3explorer.sharpBluRay
                 }
             }
         }
-        
+
         public IDirectoryAbstraction RootDirectory { get; private set; }
         public Index Index { get; private set; }
         public MovieObject MovieObject { get; private set; }

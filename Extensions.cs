@@ -99,5 +99,23 @@ namespace moe.yo3explorer.sharpBluRay
                 default: throw new NotImplementedException(String.Format("Unknown language code: " + s));
             }
         }
+        
+        [DebuggerStepThrough]
+        public static ulong ReadUInt64LE(this Stream s)
+        {
+            byte[] bufferLE = new byte[8];
+            if (s.Read(bufferLE, 0, 8) != 8)
+                throw new EndOfStreamException("Failed to read 8 bytes!");
+            return BitConverter.ToUInt64(bufferLE, 0);
+        }
+
+        [DebuggerStepThrough]
+        public static int ReadInt32LE(this Stream s)
+        {
+            byte[] bufferLE = new byte[4];
+            if (s.Read(bufferLE, 0, 4) != 4)
+                throw new EndOfStreamException("Failed to read 4 bytes!");
+            return BitConverter.ToInt32(bufferLE, 0);
+        }
     }
 }

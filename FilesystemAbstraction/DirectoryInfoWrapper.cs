@@ -9,12 +9,15 @@ namespace moe.yo3explorer.sharpBluRay.FilesystemAbstraction
     public class DirectoryInfoWrapper : IDirectoryAbstraction
     {
         [DebuggerStepThrough]
-        public DirectoryInfoWrapper(DirectoryInfo diw)
+        public DirectoryInfoWrapper(DirectoryInfo diw, string displayName)
         {
             this.PhysicalDirectory = diw;
+            this.Name = displayName;
         }
 
         private DirectoryInfo PhysicalDirectory;
+
+        public string Name { get; }
 
         [DebuggerStepThrough]
         public bool TestForFile(string filename)
@@ -45,7 +48,15 @@ namespace moe.yo3explorer.sharpBluRay.FilesystemAbstraction
             DirectoryInfo di = new DirectoryInfo(Path.Combine(PhysicalDirectory.FullName, dirname));
             if (!di.Exists)
                 throw new DirectoryNotFoundException(di.FullName);
-            return new DirectoryInfoWrapper(di);
+            return new DirectoryInfoWrapper(di, dirname);
+        }
+        
+        [DebuggerStepThrough]
+        public string[] ListFiles()
+        {
+            FileInfo[] fileInfos = PhysicalDirectory.GetFiles();
+            string[] convertAll = Array.ConvertAll(fileInfos, x => x.Name);
+            return convertAll;
         }
     }
 }

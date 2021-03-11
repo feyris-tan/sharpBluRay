@@ -62,7 +62,7 @@ namespace moe.yo3explorer.sharpBluRay.Model
         private void readPlaylist(MemoryStream ms,int playlistLength)
         {
             int assumedLength = ms.ReadInt32BE();
-            Debug.WriteLineIf(assumedLength != playlistLength, String.Format("Expected Playlist length {0}, but got {1}",playlistLength,assumedLength));
+            Debug.WriteLineIf(assumedLength != playlistLength - 4, String.Format("Expected Playlist length {0}, but got {1}",playlistLength,assumedLength));
             ushort reserved = ms.ReadUInt16();
             ushort playLength = ms.ReadUInt16();
             ushort subpathsLength = ms.ReadUInt16();

@@ -41,6 +41,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="FilesystemAbstraction\DirectoryInfoWrapper.cs" />
     <Compile Include="FilesystemAbstraction\IDirectoryAbstraction.cs" />
+    <Compile Include="FilesystemAbstraction\MetadataArchiveWrapper.cs" />
+    <Compile Include="MetadataArchiveManager.cs" />
+    <Compile Include="MetadataArchiveManagerException.cs" />
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IndexModel\AppInfo.cs" />
     <Compile Include="Model\Index.cs" />

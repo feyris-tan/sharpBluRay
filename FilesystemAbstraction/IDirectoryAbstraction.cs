@@ -10,5 +10,7 @@ namespace moe.yo3explorer.sharpBluRay.FilesystemAbstraction
         byte[] ReadFileCompletely(string filename);
         bool TestForSubdirectory(string dirname);
         IDirectoryAbstraction OpenSubdirectory(string dirname);
+        string Name { get; }
+        string[] ListFiles();
     }
 }
