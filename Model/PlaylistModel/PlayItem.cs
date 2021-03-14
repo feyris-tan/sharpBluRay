@@ -76,7 +76,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
 
             if (numPgText > 0)
             {
-                throw new NotImplementedException("PGS");
+                streamInfos.Add(new PresentationGraphicsStreamInfo(ms));
             }
 
             if (numIgStream > 0)

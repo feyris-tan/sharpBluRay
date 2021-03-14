@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using moe.yo3explorer.sharpBluRay.Languages;
 
 namespace moe.yo3explorer.sharpBluRay
 {
@@ -87,27 +87,13 @@ namespace moe.yo3explorer.sharpBluRay
         [DebuggerStepThrough]
         public static string DecodeLanguageCodeEndonyme(this string s)
         {
-            if (s.Length != 3)
-                throw new ArgumentException("Language Codes must be 3 bytes long!");
-
-            switch (s)
-            {
-                case "jpn": return "日本語";
-                default: throw new NotImplementedException(String.Format("Unknown language code: " + s));
-            }
+            return LanguageManager.GetLanguage(s).Endonym;
         }
 
         [DebuggerStepThrough]
         public static string DecodeLanguageCodeEnglish(this string s)
         {
-            if (s.Length != 3)
-                throw new ArgumentException("Language Codes must be 3 bytes long!");
-
-            switch (s)
-            {
-                case "jpn": return "Japanese";
-                default: throw new NotImplementedException(String.Format("Unknown language code: " + s));
-            }
+            return LanguageManager.GetLanguage(s).IsoLanguageName;
         }
         
         [DebuggerStepThrough]

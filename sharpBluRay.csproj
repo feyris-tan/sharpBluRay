@@ -46,6 +46,10 @@
     <Compile Include="FilesystemWalker\FileVisitor.cs" />
     <Compile Include="FilesystemWalker\FileVisitorResult.cs" />
     <Compile Include="FilesystemWalker\FileWalker.cs" />
+    <Compile Include="Languages\Language.cs" />
+    <Compile Include="Languages\LanguageFamily.cs" />
+    <Compile Include="Languages\LanguageManager.cs" />
+    <Compile Include="Languages\UnknownLanguageCodeException.cs" />
     <Compile Include="MetadataArchiveManager.cs" />
     <Compile Include="MetadataArchiveManagerException.cs" />
     <Compile Include="Model\ClipInfo.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="Model\PlaylistModel\StreamModel\FrameRate.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\InteractiveGraphicsSteamInfo.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\MarkType.cs" />
+    <Compile Include="Model\PlaylistModel\StreamModel\PresentationGraphicsStream.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\PrimaryAudioStreamInfo.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\PrimaryVideoStreamInfo.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\SamplingRate.cs" />
@@ -102,8 +107,6 @@
     <Compile Include="Model\PlaylistModel\UserOperationMaskTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model\clpi_parse.c" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 using moe.yo3explorer.sharpBluRay.FilesystemAbstraction;
 using moe.yo3explorer.sharpBluRay.Model;
-using moe.yo3explorer.sharpBluRay.Model.PlaylistModel;
-using moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel;
 
 namespace moe.yo3explorer.sharpBluRay
 {
@@ -66,6 +63,7 @@ namespace moe.yo3explorer.sharpBluRay
             DirectoryInfoWrapper first = enumerator.Current;
             if (first == null)
                 return null;
+            enumerator.Dispose();
             return new BluRayDiscMovie(first);
         }
 

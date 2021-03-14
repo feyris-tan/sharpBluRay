@@ -8,6 +8,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
     {
         PrimaryVideo,
         PrimaryAudio,
-        InteractiveGraphics
+        InteractiveGraphics,
+        PresentationGraphics
     }
 }
