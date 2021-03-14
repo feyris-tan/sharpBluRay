@@ -64,37 +64,41 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
             ms.Position += 5;
 
             streamInfos = new List<StreamInfo>();
-            if (numPrimaryVideo > 0)
+            while (numPrimaryVideo > 0)
             {
                 streamInfos.Add(new PrimaryVideoStreamInfo(ms));
+                numPrimaryVideo--;
             }
 
-            if (numPrimaryAudio > 0)
+            while (numPrimaryAudio > 0)
             {
                 streamInfos.Add(new PrimaryAudioStreamInfo(ms));
+                numPrimaryAudio--;
             }
 
-            if (numPgText > 0)
+            while (numPgText > 0)
             {
                 streamInfos.Add(new PresentationGraphicsStreamInfo(ms));
+                numPgText--;
             }
 
-            if (numIgStream > 0)
+            while (numIgStream > 0)
             {
                 streamInfos.Add(new InteractiveGraphicsSteamInfo(ms));
+                numIgStream--;
             }
 
-            if (numSecondaryAudio > 0)
+            while (numSecondaryAudio > 0)
             {
                 throw new NotImplementedException("Secondary Audio");
             }
 
-            if (numSecondaryVideo > 0)
+            while (numSecondaryVideo > 0)
             {
                 throw new NotImplementedException("Secondary Video");
             }
 
-            if (numPipPgText > 0)
+            while (numPipPgText > 0)
             {
                 throw new NotImplementedException("Picture-In-Picture PGS");
             }
