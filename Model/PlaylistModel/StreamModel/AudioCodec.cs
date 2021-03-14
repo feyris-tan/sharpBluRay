@@ -4,8 +4,10 @@ using System.Text;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
 {
-    enum AudioCodec : byte
+    public enum AudioCodec : byte
     {
+        MPEG1_AUDIO = 0x03,
+        MPEG2_AUDIO = 0x04,
         LPCM = 0x80,
         DOLBY_DIGITAL = 0x81,
         DTS = 0x82,

@@ -40,7 +40,7 @@ namespace moe.yo3explorer.sharpBluRay.Model
             int assumedLen = buffer.Length - 4;
             Debug.WriteLineIf(totalLen != assumedLen, "Length of Movie object is funky...");
             int reserved = ms.ReadInt32BE();
-            ushort numObjects = ms.ReadUInt16();
+            ushort numObjects = ms.ReadUInt16BE();
             MovieObjects = new MovieObjectEntry[numObjects];
             for (ushort i = 0; i < numObjects; i++)
             {

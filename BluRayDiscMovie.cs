@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using moe.yo3explorer.sharpBluRay.FilesystemAbstraction;
 using moe.yo3explorer.sharpBluRay.Model;
+using moe.yo3explorer.sharpBluRay.Model.PlaylistModel;
+using moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel;
 
 namespace moe.yo3explorer.sharpBluRay
 {
@@ -31,6 +33,29 @@ namespace moe.yo3explorer.sharpBluRay
                     continue;
                 yield return new DirectoryInfoWrapper(driveInfo.RootDirectory, driveInfo.VolumeLabel);
             }
+        }
+
+        public static DriveInfo FindBluRayDiscDriveInfo()
+        {
+            DriveInfo[] driveInfos = DriveInfo.GetDrives();
+            foreach (DriveInfo driveInfo in driveInfos)
+            {
+                if (!driveInfo.IsReady)
+                    continue;
+                if (driveInfo.DriveType != DriveType.CDRom)
+                    continue;
+                DirectoryInfo certificate = new DirectoryInfo(Path.Combine(driveInfo.RootDirectory.FullName, "CERTIFICATE"));
+                if (!certificate.Exists)
+                    continue;
+                DirectoryInfo bdmv = new DirectoryInfo(Path.Combine(driveInfo.RootDirectory.FullName, "BDMV"));
+                if (!bdmv.Exists)
+                    continue;
+                FileInfo indexBdmv = new FileInfo(Path.Combine(bdmv.FullName, "index.bdmv"));
+                if (!indexBdmv.Exists)
+                    continue;
+                return driveInfo;
+            }
+            return null;
         }
 
         public static BluRayDiscMovie OpenFirstPhysicalBluRayDiscMovie()
@@ -78,6 +103,14 @@ namespace moe.yo3explorer.sharpBluRay
                 }
             }
 
+            if (bdmvRoot.TestForSubdirectory("CLIPINF"))
+            {
+                IDirectoryAbstraction clipInfoDir = bdmvRoot.OpenSubdirectory("CLIPINF");
+                string[] listFiles = clipInfoDir.ListFiles();
+                Array.Sort(listFiles);
+                Clips = Array.ConvertAll(listFiles, x => new ClipInfo(clipInfoDir.ReadFileCompletely(x)));
+            }
+
             if (source.TestForSubdirectory("CERTIFICATE"))
             {
                 IDirectoryAbstraction certificate = source.OpenSubdirectory("CERTIFICATE");
@@ -88,7 +121,8 @@ namespace moe.yo3explorer.sharpBluRay
                 }
             }
         }
-
+        
+        public ClipInfo[] Clips { get; private set; }
         public IDirectoryAbstraction RootDirectory { get; private set; }
         public Index Index { get; private set; }
         public MovieObject MovieObject { get; private set; }

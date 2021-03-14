@@ -6,7 +6,7 @@ using System.Text;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
 {
-    class SubPlayItem
+    public class SubPlayItem
     {
         public SubPlayItem(byte[] readFixedLengthByteArray)
         {
@@ -21,11 +21,11 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
             StdId = ms.ReadInt8();
             SubPlayItemInTime = ms.ReadUInt32BE();
             SubPlayItemOutTime = ms.ReadUInt32BE();
-            SyncPlayItemId = ms.ReadUInt16();
+            SyncPlayItemId = ms.ReadUInt16BE();
             SyncStartPtsOfPlayItem = ms.ReadInt32BE();
 
-            _clipInfos = new List<ClipInfo>();
-            _clipInfos.Add(new ClipInfo(0, FileName, CodecId, StdId));
+            _clipInfos = new List<AngleClipInfo>();
+            _clipInfos.Add(new AngleClipInfo(0, FileName, CodecId, StdId));
             if (IsMultiClipEntries)
             {
                 int length = ms.ReadInt8();
@@ -35,13 +35,13 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
                     FileName = ms.ReadFixedLengthString(5);
                     CodecId = ms.ReadFixedLengthString(4);
                     StdId = ms.ReadInt8();
-                    _clipInfos.Add(new ClipInfo(i + 1, FileName, CodecId, StdId));
+                    _clipInfos.Add(new AngleClipInfo(i + 1, FileName, CodecId, StdId));
                 }
             }
         }
 
-        private List<ClipInfo> _clipInfos;
-        public ReadOnlyCollection<ClipInfo> SubClipEntires { get { return new ReadOnlyCollection<ClipInfo>(_clipInfos); } }
+        private List<AngleClipInfo> _clipInfos;
+        public ReadOnlyCollection<AngleClipInfo> SubClipEntires { get { return new ReadOnlyCollection<AngleClipInfo>(_clipInfos); } }
 
         public int SyncStartPtsOfPlayItem { get; private set; }
 

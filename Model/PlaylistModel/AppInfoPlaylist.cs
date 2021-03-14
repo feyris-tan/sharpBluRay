@@ -18,7 +18,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
 
             int type = ms.ReadInt8();
             PlaybackType = (PlaybackType) type;
-            PlaybackCount = ms.ReadUInt16();
+            PlaybackCount = ms.ReadUInt16BE();
             UOMaskTable = new UserOperationMaskTable(ms.ReadFixedLengthByteArray(8));
 
             byte b = ms.ReadInt8();

@@ -36,14 +36,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aacs.cs" />
     <Compile Include="BluRayDiscMovie.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FilesystemAbstraction\DirectoryInfoWrapper.cs" />
     <Compile Include="FilesystemAbstraction\IDirectoryAbstraction.cs" />
     <Compile Include="FilesystemAbstraction\MetadataArchiveWrapper.cs" />
+    <Compile Include="FilesystemWalker\FileVisitor.cs" />
+    <Compile Include="FilesystemWalker\FileVisitorResult.cs" />
+    <Compile Include="FilesystemWalker\FileWalker.cs" />
     <Compile Include="MetadataArchiveManager.cs" />
     <Compile Include="MetadataArchiveManagerException.cs" />
+    <Compile Include="Model\ClipInfo.cs" />
+    <Compile Include="Model\ClipInfoModel\AtcDelta.cs" />
+    <Compile Include="Model\ClipInfoModel\AtcSequence.cs" />
+    <Compile Include="Model\ClipInfoModel\AudioProgramStream.cs" />
+    <Compile Include="Model\ClipInfoModel\ClipInfoEntity.cs" />
+    <Compile Include="Model\ClipInfoModel\CPI.cs" />
+    <Compile Include="Model\ClipInfoModel\EpCoarse.cs" />
+    <Compile Include="Model\ClipInfoModel\EpFine.cs" />
+    <Compile Include="Model\ClipInfoModel\EpMapEntry.cs" />
+    <Compile Include="Model\ClipInfoModel\GraphicsProgramStream.cs" />
+    <Compile Include="Model\ClipInfoModel\Program.cs" />
+    <Compile Include="Model\ClipInfoModel\ProgramStream.cs" />
+    <Compile Include="Model\ClipInfoModel\ProgramStreamType.cs" />
+    <Compile Include="Model\ClipInfoModel\StcSequence.cs" />
+    <Compile Include="Model\ClipInfoModel\SubtitleProgramStream.cs" />
+    <Compile Include="Model\ClipInfoModel\VideoProgramStream.cs" />
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IndexModel\AppInfo.cs" />
     <Compile Include="Model\Index.cs" />
@@ -60,7 +80,7 @@
     <Compile Include="Model\MovieObjectModel\TerminalInfo.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="Model\PlaylistModel\AppInfoPlaylist.cs" />
-    <Compile Include="Model\PlaylistModel\ClipInfo.cs" />
+    <Compile Include="Model\PlaylistModel\AngleClipInfo.cs" />
     <Compile Include="Model\PlaylistModel\Mark.cs" />
     <Compile Include="Model\PlaylistModel\PlaybackType.cs" />
     <Compile Include="Model\PlaylistModel\PlayItem.cs" />
@@ -68,7 +88,7 @@
     <Compile Include="Model\PlaylistModel\StreamModel\AudioCodec.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\AudioPresentationMode.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\FrameRate.cs" />
-    <Compile Include="Model\PlaylistModel\StreamModel\InteractiveGraphicsSteam.cs" />
+    <Compile Include="Model\PlaylistModel\StreamModel\InteractiveGraphicsSteamInfo.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\MarkType.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\PrimaryAudioStreamInfo.cs" />
     <Compile Include="Model\PlaylistModel\StreamModel\PrimaryVideoStreamInfo.cs" />
@@ -82,6 +102,8 @@
     <Compile Include="Model\PlaylistModel\UserOperationMaskTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\clpi_parse.c" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

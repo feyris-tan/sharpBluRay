@@ -11,7 +11,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
     {
         internal PlayItem(MemoryStream ms)
         {
-            ushort len = ms.ReadUInt16();
+            ushort len = ms.ReadUInt16BE();
             byte[] buffer = ms.ReadFixedLengthByteArray(len);
             ms = new MemoryStream(buffer, false);
 
@@ -31,12 +31,12 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
             PlayItemRandomAccessFlag = (b & 0x80) != 0;
             StillMode = ms.ReadInt8();
             if (StillMode == 1)
-                StillTime = ms.ReadUInt16();
+                StillTime = ms.ReadUInt16BE();
             else
                 ms.Position += 2;
 
-            _angles = new List<ClipInfo>();
-            _angles.Add(new ClipInfo(0, ClipName, CodecId, StcId));
+            _angles = new List<AngleClipInfo>();
+            _angles.Add(new AngleClipInfo(0, ClipName, CodecId, StcId));
             if (IsMultiAngle)
             {
                 int entries = ms.ReadInt8();
@@ -48,11 +48,11 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
                     string subClipName = ms.ReadFixedLengthString(5);
                     string subcodecid = ms.ReadFixedLengthString(4);
                     byte subStcId = ms.ReadInt8();
-                    _angles.Add(new ClipInfo(i, subClipName, subcodecid, subStcId));
+                    _angles.Add(new AngleClipInfo(i, subClipName, subcodecid, subStcId));
                 }
             }
 
-            int streamsLength = ms.ReadUInt16();
+            int streamsLength = ms.ReadUInt16BE();
             ms.Position += 2;
             byte numPrimaryVideo = ms.ReadInt8();
             byte numPrimaryAudio = ms.ReadInt8();
@@ -105,8 +105,8 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
 
         public bool MultiAngleDifferentAudios { get; private set; }
 
-        private List<ClipInfo> _angles;
-        public ReadOnlyCollection<ClipInfo> Angles { get { return new ReadOnlyCollection<ClipInfo>(_angles);} }
+        private List<AngleClipInfo> _angles;
+        public ReadOnlyCollection<AngleClipInfo> Angles { get { return new ReadOnlyCollection<AngleClipInfo>(_angles);} }
 
         public ushort StillTime { get; private set; }
 
@@ -131,5 +131,6 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
 
         private List<StreamInfo> streamInfos;
         public ReadOnlyCollection<StreamInfo> Streams { get { return new ReadOnlyCollection<StreamInfo>(streamInfos); } }
+        public SubPlayItem[] SubPlayItems { get; internal set; }
     }
 }

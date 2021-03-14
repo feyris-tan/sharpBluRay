@@ -15,7 +15,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.IndexModel
             FirstPlayback = ReadIndexObject(ms);
             TopMenu = ReadIndexObject(ms);
 
-            ushort titles = ms.ReadUInt16();
+            ushort titles = ms.ReadUInt16BE();
             Titles = new Title[titles];
             for (int i = 0; i < titles; i++)
             {

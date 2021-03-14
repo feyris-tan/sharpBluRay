@@ -44,9 +44,15 @@ namespace moe.yo3explorer.sharpBluRay
             {
                 SerializeDirectory(ida.OpenSubdirectory("PLAYLIST"), bw);
             }
+            if (ida.TestForSubdirectory("CLIPINF"))
+            {
+                SerializeDirectory(ida.OpenSubdirectory("CLIPINF"), bw);
+            }
 
             foreach (string listFile in ida.ListFiles())
             {
+                if (!listFile.EndsWith(".bdmv") && !listFile.EndsWith(".mpls") && !listFile.EndsWith(".clpi"))
+                    throw new NotImplementedException(listFile);
                 bw.Write(OPCODE_FILE);
                 byte[] buffer = ida.ReadFileCompletely(listFile);
                 SerializeString(listFile, bw);

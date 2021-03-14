@@ -37,6 +37,16 @@ namespace moe.yo3explorer.sharpBluRay
             byte[] bufferBE = new byte[4] { bufferLE[3], bufferLE[2], bufferLE[1], bufferLE[0] };
             return BitConverter.ToUInt32(bufferBE, 0);
         }
+        
+        [DebuggerStepThrough]
+        public static ulong ReadUInt64BE(this Stream s)
+        {
+            byte[] bufferLE = new byte[8];
+            if (s.Read(bufferLE, 0, 8) != 8)
+                throw new EndOfStreamException("Failed to read 8 bytes!");
+            byte[] bufferBE = new byte[8] { bufferLE[7], bufferLE[6], bufferLE[5], bufferLE[4], bufferLE[3], bufferLE[2], bufferLE[1], bufferLE[0] };
+            return BitConverter.ToUInt64(bufferBE, 0);
+        }
 
         [DebuggerStepThrough]
         public static void ReadFully(this Stream s, byte[] fillMe)
@@ -65,7 +75,7 @@ namespace moe.yo3explorer.sharpBluRay
         }
 
         [DebuggerStepThrough]
-        public static ushort ReadUInt16(this Stream s)
+        public static ushort ReadUInt16BE(this Stream s)
         {
             byte[] bufferLE = new byte[2];
             if (s.Read(bufferLE, 0, 2) != 2)

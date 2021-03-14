@@ -32,18 +32,18 @@ namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
             switch (StreamEntryType)
             {
                 case StreamEntryType.STREAM_FOR_PLAYITEM:
-                    StreamPIDOfMainClip = ms2.ReadUInt16();
+                    StreamPIDOfMainClip = ms2.ReadUInt16BE();
                     ms2.Position += 6;
                     break;
                 case StreamEntryType.STREAM_FOR_SUBPATH:
                     SubPathId = ms2.ReadInt8();
                     SubClipEntryId = ms2.ReadInt8();
-                    StreamPIDOfMainClip = ms2.ReadUInt16();
+                    StreamPIDOfMainClip = ms2.ReadUInt16BE();
                     ms2.Position += 4;
                     break;
                 case StreamEntryType.STREAM_FOR_IN_MUX_SUBPATH:
                     SubPathId = ms2.ReadInt8();
-                    StreamPIDOfMainClip = ms2.ReadUInt16();
+                    StreamPIDOfMainClip = ms2.ReadUInt16BE();
                     ms2.Position += 5;
                     break;
                 default:

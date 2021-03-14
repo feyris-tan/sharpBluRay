@@ -5,7 +5,7 @@ using System.Text;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
 {
-    class PrimaryAudioStreamInfo : StreamInfo
+    public class PrimaryAudioStreamInfo : StreamInfo
     {
         public PrimaryAudioStreamInfo(MemoryStream ms) : base(PlaylistModel.StreamType.PrimaryAudio)
         {

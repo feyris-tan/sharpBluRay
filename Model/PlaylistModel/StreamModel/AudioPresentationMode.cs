@@ -4,7 +4,7 @@ using System.Text;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
 {
-    enum AudioPresentationMode
+    public enum AudioPresentationMode
     {
         RESERVED = 0,
         MONO = 1,

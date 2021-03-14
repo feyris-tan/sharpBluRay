@@ -4,7 +4,7 @@ using System.Text;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel
 {
-    enum VideoResolution : int{
+    public enum VideoResolution : int{
         RESERVED = 0,
         _480i = 1,
         _576i = 2,

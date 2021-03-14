@@ -12,7 +12,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.IndexModel
 
             s.Position++;
 
-            Name = s.ReadUInt16();
+            Name = s.ReadUInt16BE();
 
             s.Position += 4;
         }

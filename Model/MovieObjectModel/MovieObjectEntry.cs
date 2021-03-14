@@ -13,7 +13,7 @@ namespace moe.yo3explorer.sharpBluRay.Model.MovieObjectModel
             ms.Position++;
             TerminalInfo = new TerminalInfo(int8);
 
-            ushort NumNavigationCommands = ms.ReadUInt16();
+            ushort NumNavigationCommands = ms.ReadUInt16BE();
             NavigationCommands = new NavigationCommand[NumNavigationCommands];
             for (ushort i = 0; i < NumNavigationCommands; i++)
             {

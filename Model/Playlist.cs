@@ -45,15 +45,15 @@ namespace moe.yo3explorer.sharpBluRay.Model
             MemoryStream ms = new MemoryStream(markBuffer);
             int assumedBufferLength = ms.ReadInt32BE();
             Debug.WriteLineIf(assumedBufferLength != markBuffer.Length - 4, "Mark Buffer length weird.");
-            int numMarks = ms.ReadUInt16();
+            int numMarks = ms.ReadUInt16BE();
             Marks = new Mark[numMarks];
             for (int i = 0; i < numMarks; i++)
             {
                 byte reserved = ms.ReadInt8();
                 MarkType markType = (MarkType)ms.ReadInt8();
-                ushort playItemId = ms.ReadUInt16();
+                ushort playItemId = ms.ReadUInt16BE();
                 uint timeStamp = ms.ReadUInt32BE();
-                ushort entryEsPid = ms.ReadUInt16();
+                ushort entryEsPid = ms.ReadUInt16BE();
                 uint duration = ms.ReadUInt32BE();
                 Marks[i] = new Mark(markType, playItemId, timeStamp, entryEsPid, duration);
             }
@@ -63,9 +63,9 @@ namespace moe.yo3explorer.sharpBluRay.Model
         {
             int assumedLength = ms.ReadInt32BE();
             Debug.WriteLineIf(assumedLength != playlistLength - 4, String.Format("Expected Playlist length {0}, but got {1}",playlistLength,assumedLength));
-            ushort reserved = ms.ReadUInt16();
-            ushort playLength = ms.ReadUInt16();
-            ushort subpathsLength = ms.ReadUInt16();
+            ushort reserved = ms.ReadUInt16BE();
+            ushort playLength = ms.ReadUInt16BE();
+            ushort subpathsLength = ms.ReadUInt16BE();
 
             PlayItems = new PlayItem[playLength];
             for (int i = 0; i < playLength; i++)
@@ -88,8 +88,10 @@ namespace moe.yo3explorer.sharpBluRay.Model
                     SubPlayItem[] subPlayItems = new SubPlayItem[numSubPlayItems];
                     for (int j = 0; j < numSubPlayItems; j++)
                     {
-                        subPlayItems[j] = new SubPlayItem(ms2.ReadFixedLengthByteArray(ms2.ReadUInt16()));
+                        subPlayItems[j] = new SubPlayItem(ms2.ReadFixedLengthByteArray(ms2.ReadUInt16BE()));
                     }
+
+                    PlayItems[i].SubPlayItems = subPlayItems;
                 }
             }
         }
