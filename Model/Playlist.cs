@@ -75,10 +75,10 @@ namespace moe.yo3explorer.sharpBluRay.Model
 
             if (subpathsLength > 0)
             {
-                int subpathBufferSize = ms.ReadInt32BE();
-                MemoryStream ms2 = new MemoryStream(ms.ReadFixedLengthByteArray(subpathBufferSize));
                 for (int i = 0; i < subpathsLength; i++)
                 {
+                    int subpathBufferSize = ms.ReadInt32BE();
+                    MemoryStream ms2 = new MemoryStream(ms.ReadFixedLengthByteArray(subpathBufferSize));
                     ms2.Position++;
                     SubPathType subPathType = (SubPathType) ms2.ReadInt8();
                     ms2.Position++;

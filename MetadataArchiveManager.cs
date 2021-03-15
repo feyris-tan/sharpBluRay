@@ -23,34 +23,36 @@ namespace moe.yo3explorer.sharpBluRay
             BinaryWriter bw = new BinaryWriter(ms);
             bw.Write(MAGIC);
             bw.Write(OPCODE_V1);
-            SerializeDirectory(ida, bw);
+            SerializeDirectory(ida, bw,1);
             bw.Write(OPCODE_END_OF_ARCHIVE);
             return ms.ToArray();
         }
 
-        private static void SerializeDirectory(IDirectoryAbstraction ida, BinaryWriter bw)
+        private static void SerializeDirectory(IDirectoryAbstraction ida, BinaryWriter bw, int depth)
         {
             bw.Write(OPCODE_BEGIN_DIRECTORY);
             SerializeString(ida.Name, bw);
             if (ida.TestForSubdirectory("BDMV"))
             {
-                SerializeDirectory(ida.OpenSubdirectory("BDMV"), bw);
+                SerializeDirectory(ida.OpenSubdirectory("BDMV"), bw,depth + 1);
             }
             if (ida.TestForSubdirectory("CERTIFICATE"))
             {
-                SerializeDirectory(ida.OpenSubdirectory("CERTIFICATE"), bw);
+                SerializeDirectory(ida.OpenSubdirectory("CERTIFICATE"), bw,depth + 1);
             }
             if (ida.TestForSubdirectory("PLAYLIST"))
             {
-                SerializeDirectory(ida.OpenSubdirectory("PLAYLIST"), bw);
+                SerializeDirectory(ida.OpenSubdirectory("PLAYLIST"), bw,depth +1);
             }
             if (ida.TestForSubdirectory("CLIPINF"))
             {
-                SerializeDirectory(ida.OpenSubdirectory("CLIPINF"), bw);
+                SerializeDirectory(ida.OpenSubdirectory("CLIPINF"), bw, depth +1);
             }
 
             foreach (string listFile in ida.ListFiles())
             {
+                if (depth == 1 && listFile.Equals("disc.inf"))
+                    continue;
                 if (!listFile.EndsWith(".bdmv") && !listFile.EndsWith(".mpls") && !listFile.EndsWith(".clpi"))
                     throw new NotImplementedException(listFile);
                 bw.Write(OPCODE_FILE);
