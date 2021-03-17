@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
+using moe.yo3explorer.sharpBluRay.ComponentModel;
 
 namespace moe.yo3explorer.sharpBluRay.Model
 {
+    [TypeConverter(typeof(IdTypeConverter))]
     public class Id
     {
         internal Id(byte[] buffer)

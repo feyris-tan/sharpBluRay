@@ -47,5 +47,10 @@ namespace moe.yo3explorer.sharpBluRay.FilesystemAbstraction
             }
             return filenames;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

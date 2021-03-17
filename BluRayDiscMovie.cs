@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using moe.yo3explorer.sharpBluRay.FilesystemAbstraction;
 using moe.yo3explorer.sharpBluRay.Model;
@@ -96,7 +97,7 @@ namespace moe.yo3explorer.sharpBluRay
                         if (!playlistDir.TestForFile(fname))
                             continue;
                         byte[] mplsBuffer = playlistDir.ReadFileCompletely(fname);
-                        Playlists[i] = new Playlist(mplsBuffer);
+                        Playlists[i] = new Playlist(mplsBuffer, i);
                     }
                 }
             }
@@ -106,7 +107,7 @@ namespace moe.yo3explorer.sharpBluRay
                 IDirectoryAbstraction clipInfoDir = bdmvRoot.OpenSubdirectory("CLIPINF");
                 string[] listFiles = clipInfoDir.ListFiles();
                 Array.Sort(listFiles);
-                Clips = Array.ConvertAll(listFiles, x => new ClipInfo(clipInfoDir.ReadFileCompletely(x)));
+                Clips = Array.ConvertAll(listFiles, x => new ClipInfo(clipInfoDir.ReadFileCompletely(x),int.Parse(Path.GetFileNameWithoutExtension(x))));
             }
 
             if (source.TestForSubdirectory("CERTIFICATE"))
@@ -120,11 +121,19 @@ namespace moe.yo3explorer.sharpBluRay
             }
         }
         
+        [Description("Descriptors of the Transport streams")]
         public ClipInfo[] Clips { get; private set; }
+        [Description("The source this metadata has been acquired from")]
         public IDirectoryAbstraction RootDirectory { get; private set; }
         public Index Index { get; private set; }
         public MovieObject MovieObject { get; private set; }
+
+        [Description("Description of the actual tracks")]
+        [Browsable(true)]
         public Playlist[] Playlists { get; private set; }
+
+        [Description("Identifier of this Blu-Ray application")]
+        [Browsable(true)]
         public Id Id { get; private set; }
     }
 }

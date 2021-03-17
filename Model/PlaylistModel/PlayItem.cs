@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
+using moe.yo3explorer.sharpBluRay.ComponentModel;
 using moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel;
 
 namespace moe.yo3explorer.sharpBluRay.Model.PlaylistModel
 {
+    [TypeConverter(typeof(PlayItemTypeConverter))]
     public class PlayItem
     {
         internal PlayItem(MemoryStream ms)

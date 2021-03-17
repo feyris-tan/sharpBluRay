@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using moe.yo3explorer.sharpBluRay.ComponentModel;
 using moe.yo3explorer.sharpBluRay.Model.PlaylistModel;
 using moe.yo3explorer.sharpBluRay.Model.PlaylistModel.StreamModel;
 
 namespace moe.yo3explorer.sharpBluRay.Model
 {
+    [TypeConverter(typeof(PlaylistTypeConverter))]
     public class Playlist
     {
-        public Playlist(byte[] mplsBuffer)
+        public Playlist(byte[] mplsBuffer, int id)
         {
             MemoryStream ms = new MemoryStream(mplsBuffer, false);
             if (!ms.ReadFixedLengthString(4).Equals("MPLS"))
@@ -25,7 +28,7 @@ namespace moe.yo3explorer.sharpBluRay.Model
 
             int appInfoPlaylistLength = playlistStartAddress - (int)ms.Position;
             byte[] appInfoPlaylistBuffer = ms.ReadFixedLengthByteArray(appInfoPlaylistLength);
-            AppInfoPlaylist = new AppInfoPlaylist(appInfoPlaylistBuffer);
+            ParseAppInfoPlaylist(appInfoPlaylistBuffer);
 
             int playlistLength = playlistMarkStartAddress - (int) ms.Position;
             readPlaylist(ms, playlistLength);
@@ -38,7 +41,11 @@ namespace moe.yo3explorer.sharpBluRay.Model
 
             if (extensionStartAddress != 0)
                 throw new NotImplementedException("ExtensionData");
+
+            this.ID = id;
         }
+
+        public int ID { get; private set; }
 
         private void readMarks(byte[] markBuffer)
         {
@@ -55,7 +62,7 @@ namespace moe.yo3explorer.sharpBluRay.Model
                 uint timeStamp = ms.ReadUInt32BE();
                 ushort entryEsPid = ms.ReadUInt16BE();
                 uint duration = ms.ReadUInt32BE();
-                Marks[i] = new Mark(markType, playItemId, timeStamp, entryEsPid, duration);
+                Marks[i] = new Mark(markType, playItemId, timeStamp, entryEsPid, duration, PlayItems[0].InTime);
             }
         }
 
@@ -96,14 +103,47 @@ namespace moe.yo3explorer.sharpBluRay.Model
             }
         }
 
+        private void ParseAppInfoPlaylist(byte[] buffer)
+        {
+            MemoryStream ms = new MemoryStream(buffer, false);
+            int length = ms.ReadInt32BE();
+            int assumedLength = buffer.Length - 4;
+            Debug.WriteLineIf(length != assumedLength, String.Format("AppInfoPlaylist Length is {0}, expected {1}", length, assumedLength));
+            byte reserved = ms.ReadInt8();
+
+            int type = ms.ReadInt8();
+            PlaybackType = (PlaybackType)type;
+            PlaybackCount = ms.ReadUInt16BE();
+            UOMaskTable = new UserOperationMaskTable(ms.ReadFixedLengthByteArray(8));
+
+            byte b = ms.ReadInt8();
+            ms.Position++;
+            PlayListRandomAccessFlags = (b & 80) != 0;
+            AudioMixAppFlag = (b & 40) != 0;
+            LosslessFlag = (b & 20) != 0;
+        }
+
+        public bool LosslessFlag { get; private set; }
+
+        public bool AudioMixAppFlag { get; private set; }
+
+        public bool PlayListRandomAccessFlags { get; private set; }
+
+        public PlaybackType PlaybackType { get; private set; }
+        public ushort PlaybackCount { get; private set; }
+        public UserOperationMaskTable UOMaskTable { get; private set; }
+
         public int Version { get; private set; }
-
-        public AppInfoPlaylist AppInfoPlaylist { get; private set; }
-
+        
         public PlayItem[] PlayItems { get; private set; }
 
+        [Description("The chapters of a track")]
+        [Browsable(true)]
         public Mark[] Marks { get; private set; }
-    }
 
-    
+        public override string ToString()
+        {
+            return $"{nameof(ID)}: {ID}, {nameof(PlaybackType)}: {PlaybackType}, {nameof(PlaybackCount)}: {PlaybackCount}";
+        }
+    }
 }

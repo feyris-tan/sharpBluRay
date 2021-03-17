@@ -38,6 +38,10 @@
   <ItemGroup>
     <Compile Include="Aacs.cs" />
     <Compile Include="BluRayDiscMovie.cs" />
+    <Compile Include="ComponentModel\MarkTypeConverter.cs" />
+    <Compile Include="ComponentModel\PlayItemTypeConverter.cs" />
+    <Compile Include="ComponentModel\PlaylistTypeConverter.cs" />
+    <Compile Include="ComponentModel\IdTypeConverter.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FilesystemAbstraction\DirectoryInfoWrapper.cs" />
@@ -56,7 +60,6 @@
     <Compile Include="Model\ClipInfoModel\AtcDelta.cs" />
     <Compile Include="Model\ClipInfoModel\AtcSequence.cs" />
     <Compile Include="Model\ClipInfoModel\AudioProgramStream.cs" />
-    <Compile Include="Model\ClipInfoModel\ClipInfoEntity.cs" />
     <Compile Include="Model\ClipInfoModel\CPI.cs" />
     <Compile Include="Model\ClipInfoModel\EpCoarse.cs" />
     <Compile Include="Model\ClipInfoModel\EpFine.cs" />
@@ -83,7 +86,6 @@
     <Compile Include="Model\MovieObjectModel\NavigationCommand.cs" />
     <Compile Include="Model\MovieObjectModel\TerminalInfo.cs" />
     <Compile Include="Model\Playlist.cs" />
-    <Compile Include="Model\PlaylistModel\AppInfoPlaylist.cs" />
     <Compile Include="Model\PlaylistModel\AngleClipInfo.cs" />
     <Compile Include="Model\PlaylistModel\Mark.cs" />
     <Compile Include="Model\PlaylistModel\PlaybackType.cs" />
